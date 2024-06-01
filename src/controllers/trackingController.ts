@@ -1,31 +1,23 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import Visit from "../models/visitModel";
+import { TrackRequest } from "../types/requestTypes";
+import User from "../models/userModel";
 
-export const trackVisit = async (req: Request, res: Response) => {
-  const {
-    visitorId,
-    sessionId,
-    page,
-    referrer,
-    device,
-    location,
-    timestamp,
-    duration,
-    isBot,
-  } = req.body;
+export const trackVisit = async (req: TrackRequest, res: Response) => {
+  const apiKey = req.header("x-api-key");
 
   try {
-    const newVisit = new Visit({
-      visitorId,
-      sessionId,
-      page,
-      referrer,
-      device,
-      location,
-      timestamp,
-      duration,
-      isBot,
-    });
+    const user = await User.findOne({ apiKey });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid API key" });
+    }
+
+    const payload = {
+      ...req.body,
+      apiKey,
+    };
+
+    const newVisit = new Visit(payload);
 
     await newVisit.save();
 

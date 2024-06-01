@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IVisit extends Document {
+interface Visit {
+  apiKey: string;
   visitorId: string;
   sessionId: string;
   page: string;
@@ -15,7 +16,12 @@ export interface IVisit extends Document {
   isBot: boolean;
 }
 
+export interface IVisit extends Visit, Document {}
+
+export interface IVisitPlain extends Visit {}
+
 const VisitSchema: Schema = new Schema({
+  apiKey: { type: String, required: true },
   visitorId: { type: String, required: true },
   sessionId: { type: String, required: true },
   page: { type: String, required: true },
