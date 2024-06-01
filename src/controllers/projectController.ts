@@ -1,6 +1,11 @@
 import { Response } from "express";
 import Project from "../models/projectModel";
-import { ProjectRequest, RotateApiKeyRequest } from "../types/requestTypes";
+import {
+  DeleteProjectRequest,
+  GetProjectRequest,
+  ProjectRequest,
+  RotateApiKeyRequest,
+} from "../types/requestTypes";
 import { generateApiKey } from "../utils/apiKeyGenerator";
 
 export const createProject = async (req: ProjectRequest, res: Response) => {
@@ -31,9 +36,34 @@ export const getProjects = async (req: ProjectRequest, res: Response) => {
 
   try {
     const projects = await Project.find({ userId });
+
+    if (!projects) {
+      return res.status(404).json({ message: "Projects not found" });
+    }
+
     res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ message: "Error fetching projects", error });
+  }
+};
+
+export const getProjectById = async (req: GetProjectRequest, res: Response) => {
+  const { projectId } = req.params;
+
+  try {
+    const project = await Project.findById(projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (project.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching project", error });
   }
 };
 
@@ -56,5 +86,30 @@ export const rotateApiKey = async (req: RotateApiKeyRequest, res: Response) => {
     res.status(200).json({ message: "API key invalidated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error invalidating API key", error });
+  }
+};
+
+export const deleteProject = async (
+  req: DeleteProjectRequest,
+  res: Response
+) => {
+  const { projectId } = req.params;
+
+  try {
+    const project = await Project.findById(projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    // Check if the project belongs to the user
+    if (project.userId.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    await Project.findByIdAndDelete(projectId);
+    res.status(200).json({ message: "Project deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting project", error });
   }
 };

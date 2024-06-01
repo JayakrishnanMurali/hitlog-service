@@ -35,3 +35,21 @@ export interface RotateApiKeyRequest extends Request {
     projectId: string;
   };
 }
+
+export interface GetProjectRequest extends Request {
+  user: {
+    id: string;
+  };
+  params: {
+    projectId: string;
+  };
+}
+
+export interface DeleteProjectRequest extends Request {
+  user: {
+    id: string;
+  };
+  params: {
+    projectId: string;
+  };
+}
