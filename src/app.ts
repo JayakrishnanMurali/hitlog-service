@@ -4,11 +4,14 @@ import { trackingRoutes } from "./routes/trackingRoutes";
 import { authRoutes } from "./routes/authRoutes";
 import { metricsRoutes } from "./routes/metricRoutes";
 import { projectRoutes } from "./routes/projectRoutes";
+import { apiRateLimiter } from "./middlewares/rateLimiter";
 
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+
+app.use(apiRateLimiter);
 
 // Routes
 app.use("/ping", (req, res) => {
