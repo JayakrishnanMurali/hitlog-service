@@ -26,3 +26,12 @@ export interface ProjectRequest extends Request {
     name: string;
   };
 }
+
+export interface RotateApiKeyRequest extends Request {
+  user: {
+    id: string;
+  };
+  params: {
+    projectId: string;
+  };
+}
