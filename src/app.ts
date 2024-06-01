@@ -6,11 +6,11 @@ import { metricsRoutes } from "./routes/metricRoutes";
 import { projectRoutes } from "./routes/projectRoutes";
 import { apiRateLimiter } from "./middlewares/rateLimiter";
 import { authMiddleware } from "./middlewares/authMiddleware";
-import morgan from "morgan";
+import { logger } from "./middlewares/logger";
 
 const app = express();
 
-app.use(morgan("combined"));
+app.use(logger);
 
 // Middleware
 app.use(bodyParser.json());
