@@ -107,7 +107,7 @@ export const deleteProject = async (
       return res.status(403).json({ message: "Unauthorized" });
     }
 
-    await Project.findByIdAndDelete(projectId);
+    await Project.deleteOne({ _id: projectId });
     res.status(200).json({ message: "Project deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting project", error });

@@ -1,5 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import { generateApiKey } from "../utils/apiKeyGenerator";
+import Visit from "./visitModel";
 
 interface IProject extends Document {
   name: string;
@@ -13,6 +14,20 @@ const ProjectSchema: Schema = new Schema({
   apiKey: { type: String, required: true, unique: true },
   userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
+
+ProjectSchema.pre(
+  "deleteOne",
+  { document: false, query: true },
+  async function (next) {
+    const docToDelete = this.getQuery();
+    try {
+      await Visit.deleteMany({ projectId: docToDelete._id });
+      next();
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
 
 ProjectSchema.methods.rotateApiKey = function () {
   const newApiKey = generateApiKey();
