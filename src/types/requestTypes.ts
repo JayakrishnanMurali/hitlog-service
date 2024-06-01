@@ -17,3 +17,12 @@ export interface UserRequest extends Request {
     id: string;
   };
 }
+
+export interface ProjectRequest extends Request {
+  user: {
+    id: string;
+  };
+  body: {
+    name: string;
+  };
+}

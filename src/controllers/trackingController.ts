@@ -1,20 +1,20 @@
 import { Response } from "express";
+import Project from "../models/projectModel";
 import Visit from "../models/visitModel";
 import { TrackRequest } from "../types/requestTypes";
-import User from "../models/userModel";
 
 export const trackVisit = async (req: TrackRequest, res: Response) => {
   const apiKey = req.header("x-api-key");
 
   try {
-    const user = await User.findOne({ apiKey });
-    if (!user) {
+    const project = await Project.findOne({ apiKey });
+    if (!project) {
       return res.status(401).json({ message: "Invalid API key" });
     }
 
     const payload = {
       ...req.body,
-      apiKey,
+      projectId: project._id,
     };
 
     const newVisit = new Visit(payload);

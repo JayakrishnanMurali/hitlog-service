@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 interface Visit {
-  apiKey: string;
+  projectId: mongoose.Schema.Types.ObjectId;
   visitorId: string;
   sessionId: string;
   page: string;
@@ -21,7 +21,11 @@ export interface IVisit extends Visit, Document {}
 export interface IVisitPlain extends Visit {}
 
 const VisitSchema: Schema = new Schema({
-  apiKey: { type: String, required: true },
+  projectId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Project",
+  },
   visitorId: { type: String, required: true },
   sessionId: { type: String, required: true },
   page: { type: String, required: true },

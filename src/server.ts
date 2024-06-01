@@ -1,15 +1,10 @@
 import mongoose from "mongoose";
 import { config } from "./config";
 import app from "./app";
-import dotenv from "dotenv";
 
-dotenv.config();
-dotenv.config({ path: ".env.local", override: true });
-
-const mongoURI = process.env.MONGO_URI || "";
 // Mongoose Connection
 mongoose
-  .connect(mongoURI)
+  .connect(config.MONGO_URI)
   .then(() => {
     console.log("mongoDB connected");
     const PORT = config.port || 8080;
