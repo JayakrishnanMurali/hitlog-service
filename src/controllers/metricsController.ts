@@ -1,14 +1,23 @@
-import { Request, Response } from "express";
-import Visit from "../models/visitModel";
+import { Response } from "express";
 import Project from "../models/projectModel";
+import Visit from "../models/visitModel";
+import { UserRequest } from "../types/requestTypes";
 
-export const getMetrics = async (req: Request, res: Response) => {
+export const getMetrics = async (req: UserRequest, res: Response) => {
   const apiKey = req.header("x-api-key");
+
+  if (!apiKey) {
+    return res.status(400).json({ message: "API key is required" });
+  }
 
   try {
     const project = await Project.findOne({ apiKey });
     if (!project) {
       return res.status(401).json({ message: "Invalid API key" });
+    }
+
+    if (req.user.id !== project.userId.toString()) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const totalVisits = await Visit.countDocuments({ projectId: project._id });

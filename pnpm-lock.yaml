@@ -11,6 +11,9 @@ dependencies:
   body-parser:
     specifier: ^1.20.2
     version: 1.20.2
+  chalk:
+    specifier: ^5.3.0
+    version: 5.3.0
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -26,6 +29,9 @@ dependencies:
   mongoose:
     specifier: ^8.4.1
     version: 8.4.1
+  morgan:
+    specifier: ^1.10.0
+    version: 1.10.0
 
 devDependencies:
   '@types/bcrypt':
@@ -40,6 +46,12 @@ devDependencies:
   '@types/jsonwebtoken':
     specifier: ^9.0.6
     version: 9.0.6
+  '@types/morgan':
+    specifier: ^1.9.9
+    version: 1.9.9
+  i:
+    specifier: ^0.3.7
+    version: 0.3.7
   nodemon:
     specifier: ^3.1.2
     version: 3.1.2
@@ -166,6 +178,12 @@ packages:
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
     dev: true
 
+  /@types/morgan@1.9.9:
+    resolution: {integrity: sha512-iRYSDKVaC6FkGSpEVVIvrRGw0DfJMiQzIn3qr2G5B3C//AWkulhXgaBd7tS9/J79GWSYMTHGs7PfI5b3Y8m+RQ==}
+    dependencies:
+      '@types/node': 20.13.0
+    dev: true
+
   /@types/node@20.13.0:
     resolution: {integrity: sha512-FM6AOb3khNkNIXPnHFDYaHerSv8uN22C91z098AnGccVu+Pcdhi+pNUFDi0iLmPIsVE0JBD0KVS7mzUYt4nRzQ==}
     dependencies:
@@ -274,6 +292,13 @@ packages:
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  /basic-auth@2.0.1:
+    resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
+
   /bcrypt@5.1.1:
     resolution: {integrity: sha512-AGBHOG5hPYZ5Xl9KXzU5iKq9516yEmvCKDg3ecP5kX2aB6UqTeXZxk2ELnDgDm6BQSMlLt9rDB4LoSMx0rYwww==}
     engines: {node: '>= 10.0.0'}
@@ -347,6 +372,11 @@ packages:
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
       set-function-length: 1.2.2
+    dev: false
+
+  /chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
     dev: false
 
   /chokidar@3.6.0:
@@ -714,6 +744,11 @@ packages:
       - supports-color
     dev: false
 
+  /i@0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
+    dev: true
+
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -974,6 +1009,19 @@ packages:
       - supports-color
     dev: false
 
+  /morgan@1.10.0:
+    resolution: {integrity: sha512-AbegBVI4sh6El+1gNwvD5YIck7nSA36weD7xvIxG4in80j/UoK8AEGaWnnz8v1GxonMCltmlNs5ZKbGvl9b1XQ==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      basic-auth: 2.0.1
+      debug: 2.6.9
+      depd: 2.0.0
+      on-finished: 2.3.0
+      on-headers: 1.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /mpath@0.9.0:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}
     engines: {node: '>=4.0.0'}
@@ -1069,11 +1117,23 @@ packages:
     resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
     dev: false
 
+  /on-finished@2.3.0:
+    resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      ee-first: 1.1.1
+    dev: false
+
   /on-finished@2.4.1:
     resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
     engines: {node: '>= 0.8'}
     dependencies:
       ee-first: 1.1.1
+    dev: false
+
+  /on-headers@1.0.2:
+    resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
+    engines: {node: '>= 0.8'}
     dev: false
 
   /once@1.4.0:
@@ -1162,6 +1222,10 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: false
+
+  /safe-buffer@5.1.2:
+    resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
     dev: false
 
   /safe-buffer@5.2.1:
