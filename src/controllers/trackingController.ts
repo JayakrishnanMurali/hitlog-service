@@ -9,6 +9,10 @@ export const trackVisit = async (req: TrackRequest, res: Response) => {
   const ip = req.ip;
 
   try {
+    if (!apiKey) {
+      return res.status(401).json({ message: "API key is required" });
+    }
+
     const project = await Project.findOne({ apiKey });
     if (!project) {
       return res.status(401).json({ message: "Invalid API key" });

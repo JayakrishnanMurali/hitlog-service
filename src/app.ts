@@ -1,16 +1,19 @@
 import bodyParser from "body-parser";
+import cors from "cors";
 import express from "express";
-import { trackingRoutes } from "./routes/trackingRoutes";
+import { authMiddleware } from "./middlewares/authMiddleware";
+import { logger } from "./middlewares/logger";
+import { apiRateLimiter } from "./middlewares/rateLimiter";
 import { authRoutes } from "./routes/authRoutes";
 import { metricsRoutes } from "./routes/metricRoutes";
 import { projectRoutes } from "./routes/projectRoutes";
-import { apiRateLimiter } from "./middlewares/rateLimiter";
-import { authMiddleware } from "./middlewares/authMiddleware";
-import { logger } from "./middlewares/logger";
+import { trackingRoutes } from "./routes/trackingRoutes";
 
 const app = express();
 
 app.use(logger);
+
+app.use(cors());
 
 // Middleware
 app.use(bodyParser.json());
